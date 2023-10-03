@@ -5,15 +5,13 @@ class View(ctk.CTk):
     
     PAD = 20
     
-    def __init__(self):
+    def __init__(self, controller):
         super().__init__()
         self.title('Video Downloader')
-        self.downloading = False
+        self.controller = controller
     
         self.URL = tk.StringVar()
         self.Video_name = tk.StringVar()
-        self.Video_status = tk.StringVar()
-        
         
         self._main_frame()
         self._entry_frame()
@@ -69,28 +67,34 @@ class View(ctk.CTk):
         
     def _make_buttons(self):
         self.btn0 = ctk.CTkButton(self.frame_button, text='Video', bg_color='#fff',
-                                  command=self._set_url)
+                                  command=self._download_video)
         self.btn0.pack(fill='x', pady=self.PAD//4)
         self.btn1 = ctk.CTkButton(self.frame_button, text='Música', bg_color='#fff',
-                                  command=self._set_url)
+                                  command=self._download_music)
         self.btn1.pack(fill='x')
     
-    def _set_url(self):
+    def _download_video(self):
         self.URL.set(self.entry.get())
+        self.controller.download()
+        
+    #TODO: change to music.
+    def _download_music(self):
+        self.URL.set(self.entry.get())
+        self.controller.download()
         
     def download_feedback(self, validate: bool):
         if validate:
-            self._progressbar_frame()
             self._make_progress_bar()
             self.Video_name.set(f'{self.Video_name.get()}')
+            self.lbl_status.configure(text=f'')
         else:
             self.lbl_status.configure(text=f'Link inválido.')
         
     def progress_update(self, text: str, percent: float):
         self.dlLabel.configure(text=f'Fazendo o download... {text}%')
-        self.pb.set(percent)
+        self.pb.set(percent/100)
         self.lbl_status.configure(text=f'{self.Video_name.get()}')
-        if percent == 1:
+        if (percent/100) == 1:
             self._close_progress_bar()
             self.lbl_status.configure(text=f'Download completo.', text_color='#5b5')
                 
