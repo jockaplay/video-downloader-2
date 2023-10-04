@@ -57,7 +57,7 @@ class View(ctk.CTk):
         self.pb = ctk.CTkProgressBar(self.frame_3, mode='determinate', bg_color='#fff')
         self.pb.set(0)
         self.pb.pack(fill='x', side='bottom')
-        self.dlLabel = ctk.CTkLabel(self.frame_3, text="Fazendo o download... 0%")
+        self.dlLabel = ctk.CTkLabel(self.frame_3, text="Fazendo o download... 1%")
         self.dlLabel.pack(side='bottom')
     
     def _buttons_frame(self):
@@ -77,23 +77,21 @@ class View(ctk.CTk):
         self.URL.set(self.entry.get())
         self.controller.download()
         
-    #TODO: change to music.
     def _download_music(self):
-        self.URL.set(self.entry.get())
-        self.controller.download()
+        self.URL.set(self.entry.get())       
         
     def download_feedback(self, validate: bool):
         if validate:
-            self._make_progress_bar()
             self.Video_name.set(f'{self.Video_name.get()}')
-            self.lbl_status.configure(text=f'')
+            self.lbl_status.configure(text=f'{self.Video_name.get()}', text_color='#000')
+            self._make_progress_bar()
         else:
             self.lbl_status.configure(text=f'Link inválido.')
         
-    def progress_update(self, text: str, percent: float):
-        self.dlLabel.configure(text=f'Fazendo o download... {text}%')
+    def progress_update(self, percent: float):
         self.pb.set(percent/100)
-        self.lbl_status.configure(text=f'{self.Video_name.get()}')
+        #self.lbl_status.configure(text=f'{self.Video_name.get()}', text_color='#000')
+        self.dlLabel.configure(text=f'Fazendo o download... {str(int(percent))}%')
         if (percent/100) == 1:
             self._close_progress_bar()
             self.lbl_status.configure(text=f'Download completo.', text_color='#5b5')
