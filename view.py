@@ -75,26 +75,32 @@ class View(ctk.CTk):
     
     def _download_video(self):
         self.URL.set(self.entry.get())
-        self.controller.download()
+        self.controller.download_video()
         
     def _download_music(self):
-        self.URL.set(self.entry.get())       
+        self.URL.set(self.entry.get())
+        self.controller.download_audio()       
         
     def download_feedback(self, validate: bool):
         if validate:
+            self.btn0.configure(state='disabled')
+            self.btn1.configure(state='disabled')
             self.Video_name.set(f'{self.Video_name.get()}')
-            self.lbl_status.configure(text=f'{self.Video_name.get()}', text_color='#000')
+            self.status_feedback(self.Video_name.get())
             self._make_progress_bar()
         else:
-            self.lbl_status.configure(text=f'Link inválido.')
+            self.status_feedback('Link Inválido.')
+        
+    def status_feedback(self, message:str, color:str='#000'):
+        self.lbl_status.configure(text=f'{message}', text_color=color)
         
     def progress_update(self, percent: float):
         self.pb.set(percent/100)
-        #self.lbl_status.configure(text=f'{self.Video_name.get()}', text_color='#000')
+        self.status_feedback(f'{self.Video_name.get()}')
         self.dlLabel.configure(text=f'Fazendo o download... {str(int(percent))}%')
         if (percent/100) == 1:
             self._close_progress_bar()
-            self.lbl_status.configure(text=f'Download completo.', text_color='#5b5')
+            self.status_feedback('Download completo.', '#5b5')
                 
     def _close_progress_bar(self):
         self.pb.destroy()
