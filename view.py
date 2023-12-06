@@ -9,7 +9,7 @@ class View(ctk.CTk):
         super().__init__()
         self.title('Video Downloader')
         self.controller = controller
-    
+
         self.URL = tk.StringVar()
         self.Video_name = tk.StringVar()
         
@@ -34,7 +34,7 @@ class View(ctk.CTk):
         self._make_entry()
         
     def _make_entry(self):
-        self.lbl = ctk.CTkLabel(self.frame_2, text='Url do video: ', fg_color='#fff')
+        self.lbl = ctk.CTkLabel(self.frame_2, text='URL do video: ', fg_color='#fff')
         self.lbl.pack(side='left')
         self.entry = ctk.CTkEntry(self.frame_2, placeholder_text="Insira o link do video aqui...",
                                   placeholder_text_color="#a5a5a5")
