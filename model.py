@@ -11,6 +11,7 @@ class Model:
         self.controller = controller
         self.semaphore = threading.Semaphore()
         self.title = ''
+        self.music_type = [False, '']
     
     def get_title(self):
         return self.title

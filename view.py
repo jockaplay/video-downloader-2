@@ -34,11 +34,13 @@ class View(ctk.CTk):
         self._make_entry()
         
     def _make_entry(self):
-        self.lbl = ctk.CTkLabel(self.frame_2, text='URL do video: ', fg_color='#fff')
+        self.lbl = ctk.CTkLabel(self.frame_2, text='URL do video: ', fg_color='#fff', text_color="#101010")
         self.lbl.pack(side='left')
         self.entry = ctk.CTkEntry(self.frame_2, placeholder_text="Insira o link do video aqui...",
-                                  placeholder_text_color="#a5a5a5")
+                                  placeholder_text_color="#a5a5a5", fg_color='#fff', text_color="#101010")
         self.entry.pack(expand=True, fill='x', side='left')
+        self.folder = ctk.CTkButton(self.frame_2, text="local", state='disabled')
+        self.folder.pack(side='left')
     
     def _status_frame(self):
         self.status_frame = ctk.CTkFrame(self.frame_1, fg_color='#fff')
@@ -57,7 +59,7 @@ class View(ctk.CTk):
         self.pb = ctk.CTkProgressBar(self.frame_3, mode='determinate', bg_color='#fff')
         self.pb.set(0)
         self.pb.pack(fill='x', side='bottom')
-        self.dlLabel = ctk.CTkLabel(self.frame_3, text="Fazendo o download... 1%")
+        self.dlLabel = ctk.CTkLabel(self.frame_3, text="Fazendo o download... 1%", text_color='#101010')
         self.dlLabel.pack(side='bottom')
     
     def _buttons_frame(self):
